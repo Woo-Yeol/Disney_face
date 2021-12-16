@@ -1,0 +1,11 @@
+0 Anna
+1 Ariel
+2 Belle
+3 Ruponzel
+4 Elsa
+5 Cinderella
+6 Jasmine
+7 Merida
+8 Snow White
+9 Arura
+10 Tiana
