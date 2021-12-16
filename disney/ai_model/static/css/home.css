@@ -1,0 +1,65 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+/* 헤더 */
+a {
+    text-decoration: none
+}
+
+header {
+    height: 185px;
+    text-align: center;
+}
+
+
+.header_logo h1 {
+    font: bold 40px 'Verdata Italic';
+    padding-top: 45px;
+    letter-spacing: 2px;
+    color: #0277BD;
+}
+
+.header_logo p {
+    font: bold 12px 'MS Sans Serif';
+    letter-spacing: 2px;
+    color: #757575;
+}
+
+.header_gnb ul {
+    margin-top: 38px;
+}
+
+.header_gnb ul li {
+    display: inline-block;
+}
+
+.header_gnb ul li a {
+    display: block;
+    font: bold 14px 'MS Sans Serif';
+    color: #424242;
+    margin: 0px 25px;
+}
+
+
+/* 이미지 삽입 */
+.ImgBox {
+    width: 600px;
+    height: 600px;
+    margin: 20px;
+    padding: 10px;
+    background-color: aqua;
+    border-radius: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.ImgBox p {
+    vertical-align: bottom;
+}

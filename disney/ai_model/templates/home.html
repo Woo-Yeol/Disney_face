@@ -9,7 +9,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <title>Disney Face</title>
 </head>
 
@@ -17,7 +17,7 @@
     <header>
         <div class="header_logo">
             <a href="#">
-                <h1>Princess Maker AI Service</h1>
+                <h1>Found Your Princess In Your Face [AI Service]</h1>
                 <p>클라우드 컴퓨팅과 AI서비스 8조</p>
             </a>
         </div>
@@ -29,28 +29,37 @@
             </ul>
         </div>
     </header>
-
-    <div class="ImgBox">
-        <p>이미지를 삽입해주세요</p>
-        <div class="putImg">
-            <p>여기 진짜 이미지 넣는공간</p>
-        </div>
-        <button type="button" class="btn btn-primary">제출하기</button>
-    </div>
-
-    <div class="resBox">
-
-    </div>
-
-    <div>Teachable Machine Image Model</div>
+    {% if prediction %}
+    <h4 style="text-align:center; margin-top:30px"> You Are Princess {{ prediction }}</h4>
+    {% endif %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="image" accept="image/*">
-        <button type="submit">Predict</button>
+        <div style="display: flex; flex-direction:column; justify-content:center; align-items:center">
+            <div class="ImgBox" id="IB" style="background-image: url({% static 'image/BackGround.jpeg' %}); background-position: center;
+            background-size: cover;"></div>
+            <div class="putImg" style="width: 100%; text-align:center;">
+                <div class="input-group mb-3" style="width: fit-content; margin-left:auto; margin-right:auto">
+                    <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                    <input type="file" name='image' class="form-control" id="inputGroupFile01" accept="image/*"
+                        onchange="setThumbnail(event);" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: fit-content;">Predict</button>
+        </div>
     </form>
-    {% if prediction %}
-    {{ prediction }}
-    {% endif %}
+
 </body>
+
+<script>
+    function setThumbnail(event) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var image = event.target.result;
+            var img = document.getElementById('IB').style.backgroundImage = 'url(' + image + ')';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
 
 </html>
