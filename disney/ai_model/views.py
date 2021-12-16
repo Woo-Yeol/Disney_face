@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.conf import settings
 from keras.models import load_model
 from PIL import Image, ImageOps
 import numpy as np
-
+import os
 # # Load the model
 # model = load_model('keras_model.h5')
 
@@ -28,14 +29,19 @@ import numpy as np
 # prediction = model.predict(data)
 # print(prediction)
 
+BASE_DIR = getattr(settings, 'BASE_DIR', 'BASE_DIR')
+Class = ['Anna', 'Ariel', 'Belle', 'Ruponzel', 'Elsa', 'Cinderella','Jasmine', 'Merida', 'Snow White', 'Arura', 'Tiana']
+
 # Create your views here.
 def home(request):
     if request.method == "POST":
-        model = load_model('keras_model.h5')
+        model = load_model(os.path.join(BASE_DIR,'keras_model.h5'))
+
+        file = request.FILES['image']
 
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        
-        image = Image.open(request.POST.get('id'))
+
+        image = Image.open(file)
         size = (224, 224)
         
         image = ImageOps.fit(image, size, Image.ANTIALIAS)
@@ -45,7 +51,9 @@ def home(request):
         data[0] = normalized_image_array
         
         prediction = model.predict(data)
-        print(prediction)
-        return render(request,'home.html',{'prediction':prediction})
+        prediction = prediction.tolist()[0]
+
+        class_index = prediction.index(max(prediction))
+        return render(request,'home.html',{'prediction':Class[class_index]})
 
     return render(request,'home.html')

@@ -56,14 +56,16 @@
 
 <body>
     <div>Teachable Machine Image Model</div>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="file" id="imageFileOpenInput" accept="image/*">
+        <input type="file" name="image" accept="image/*">
         <button type="submit">Predict</button>
     </form>
     <!-- <button type="button" onclick="init()">Start</button>
     <button type="button" onclick="predict()">Predict</button> -->
     <!-- <div id="label-container"></div> -->
 </body>
-
+    {% if prediction %}
+        {{ prediction }}
+    {% endif %}
 </html>
