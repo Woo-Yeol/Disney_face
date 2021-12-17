@@ -35,25 +35,29 @@ Class = ['Anna', 'Ariel', 'Belle', 'Ruponzel', 'Elsa', 'Cinderella','Jasmine', '
 # Create your views here.
 def home(request):
     if request.method == "POST":
-        model = load_model(os.path.join(BASE_DIR,'keras_model.h5'))
+        try:
+            model = load_model(os.path.join(BASE_DIR,'keras_model.h5'))
 
-        file = request.FILES['image']
+            file = request.FILES['image']
 
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+            data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-        image = Image.open(file)
-        size = (224, 224)
+            image = Image.open(file)
+            size = (224, 224)
         
-        image = ImageOps.fit(image, size, Image.ANTIALIAS)
-        image_array = np.asarray(image)
+            image = ImageOps.fit(image, size, Image.ANTIALIAS)
+            image_array = np.asarray(image)
         
-        normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
-        data[0] = normalized_image_array
+            normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
+            data[0] = normalized_image_array
         
-        prediction = model.predict(data)
-        prediction = prediction.tolist()[0]
+            prediction = model.predict(data)
+            prediction = prediction.tolist()[0]
 
-        class_index = prediction.index(max(prediction))
-        return render(request,'home.html',{'prediction':Class[class_index]})
+            class_index = prediction.index(max(prediction))
+            return render(request,'home.html',{'prediction':Class[class_index]})
+        except:
+            return render(request,'home.html')
+
 
     return render(request,'home.html')
